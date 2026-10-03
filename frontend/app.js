@@ -1,0 +1,1 @@
+console.log("Frontend JS loaded. Ready for future authentication logic.")
