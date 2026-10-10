@@ -1,4 +1,4 @@
-document.getElementById('register-form').addEventListener('submit', function(event) {
+document.getElementById('registerForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent normal browser form submission
 
     const name = document.getElementById('name').value;
@@ -25,7 +25,7 @@ document.getElementById('register-form').addEventListener('submit', function(eve
         if (response.status === 201) {
             messageDiv.style.color = 'green';
             messageDiv.innerText = 'Registration successful!';
-            document.getElementById('register-form').reset();
+            document.getElementById('registerForm').reset();
         } else if (response.status === 409) {
             messageDiv.style.color = 'red';
             messageDiv.innerText = 'Error: Email already exists.';

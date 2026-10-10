@@ -6,17 +6,15 @@ import java.sql.Statement;
 
 public class DbSetup {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/";
-        String user = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "root";
-        String password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "S0wb@rnik@#224";
+        String url = "jdbc:mysql://" + DatabaseConfig.HOST + ":" + DatabaseConfig.PORT + "/";
+        
+        try (Connection conn = DriverManager.getConnection(url, DatabaseConfig.USER, DatabaseConfig.PASSWORD);
+             Statement stmt = conn.createStatement()) {
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-                Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS " + DatabaseConfig.DB_NAME);
+            System.out.println("Database " + DatabaseConfig.DB_NAME + " created or already exists.");
 
-            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS auth_db");
-            System.out.println("Database auth_db created or already exists.");
-
-            stmt.executeUpdate("USE auth_db");
+            stmt.executeUpdate("USE " + DatabaseConfig.DB_NAME);
 
             String createTable = "CREATE TABLE IF NOT EXISTS users ("
                     + "id INT AUTO_INCREMENT PRIMARY KEY, "
